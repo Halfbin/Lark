@@ -43,10 +43,15 @@ namespace Lark
         || (c == '_');
   }
 
+  bool is_digit (char c)
+  {
+    return (c >= '0' && c <= '9');
+  }
+
   bool is_identifier_medial (char c)
   {
     return is_identifier_initial (c)
-        || (c >= '0' && c <= '9');
+        || is_digit (c);
   }
 
   bool is_identifier_suffix (char c)
@@ -98,6 +103,10 @@ namespace Lark
       auto token = grab_identifier (in);
       return token;
     }
+    else if (is_digit (ch))
+    {
+      return grab_while (in, is_digit, TokenKind::integer);
+    }
     else
     {
       return { in.slice (0, 1), TokenKind::garbage };
@@ -146,6 +155,10 @@ namespace Lark
         grab_token ("but?! they can't have them before the end")
           == Token ("but?", TokenKind::identifier)
       );
+    }
+
+    SECTION ("recognizes integers") {
+      REQUIRE (grab_token ("12345 x") == Token ("12345", TokenKind::integer));
     }
   }
 
