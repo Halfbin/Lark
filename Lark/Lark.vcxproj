@@ -129,10 +129,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="RecognizeToken.cpp" />
+    <ClCompile Include="GrabToken.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="RecognizeToken.hpp" />
+    <ClInclude Include="GrabToken.hpp" />
     <ClInclude Include="Token.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

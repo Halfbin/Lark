@@ -10,6 +10,7 @@ namespace Lark
     garbage,
     end,
     space,
+    newline,
     comment,
     keyword,
     identifier,
@@ -23,6 +24,14 @@ namespace Lark
   {
     Rk::cstring_ref spelling;
     TokenKind       kind;
+
+    Token () = default;
+
+    Token (Rk::cstring_ref spelling, TokenKind kind) :
+      spelling (spelling),
+      kind     (kind)
+    { }
+
   };
 
   inline bool operator == (Token a, Token b)
