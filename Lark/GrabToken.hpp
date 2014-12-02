@@ -5,6 +5,6 @@
 
 namespace Lark
 {
-  Token recognize_token (Rk::cstring_ref);
+  Token grab_token (Rk::cstring_ref);
 
 }

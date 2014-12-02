@@ -39,4 +39,10 @@ namespace Lark
     return a.kind == b.kind && a.spelling == b.spelling;
   }
 
+  template <typename OStream>
+  inline OStream& operator << (OStream& os, Token tok)
+  {
+    return os << tok.spelling;
+  }
+
 }
