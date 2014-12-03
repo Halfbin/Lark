@@ -59,6 +59,11 @@ namespace Lark
     return (c == '!') || (c == '?');
   }
 
+  bool is_quote (char c)
+  {
+    return c == '\"';
+  }
+
   /* [a-zA-Z_][a-zA-Z_0-9]*[!\?]? */
 
   Token grab_identifier (Rk::cstring_ref in)
@@ -76,10 +81,30 @@ namespace Lark
     return { {in.begin (), end}, TokenKind::identifier };
   }
 
+  Token grab_string (Rk::cstring_ref in)
+  {
+    if (in.empty () || !is_quote (in [0]))
+      throw std::logic_error ("oops");
+
+    auto quot = in.begin ();
+
+    do
+    {
+      // Find the next quote
+      quot = std::find_if (quot + 1, in.end (), is_quote);
+
+      if (quot == in.end ())
+        throw std::runtime_error ("unclosed string");
+    }
+    while (quot [-1] == '\\');
+
+    return Token { {in.begin (), quot + 1}, TokenKind::string };
+  }
+
   Token grab_token (Rk::cstring_ref in)
   {
     if (in.empty ())
-      return Token { in, TokenKind::end };
+      return { in, TokenKind::end };
 
     char ch = in [0];
 
@@ -106,6 +131,10 @@ namespace Lark
     else if (is_digit (ch))
     {
       return grab_while (in, is_digit, TokenKind::integer);
+    }
+    else if (is_quote (ch))
+    {
+      return grab_string (in);
     }
     else
     {
@@ -143,8 +172,8 @@ namespace Lark
         grab_token ("_identifiers can start with underscores")
           == Token ("_identifiers", TokenKind::identifier));
       REQUIRE (
-        grab_token ("ident1234ifiers can have digits in them")
-          == Token ("ident1234ifiers", TokenKind::identifier));
+        grab_token ("ident1234ifiers5 can have digits in them")
+          == Token ("ident1234ifiers5", TokenKind::identifier));
       REQUIRE (
         grab_token ("1dentifiers can't start with digits")
           .kind != TokenKind::identifier);
@@ -159,6 +188,18 @@ namespace Lark
 
     SECTION ("recognizes integers") {
       REQUIRE (grab_token ("12345 x") == Token ("12345", TokenKind::integer));
+    }
+
+    SECTION ("recognizes strings") {
+      REQUIRE (
+        grab_token ("\"\" is an empty string")
+          == Token ("\"\"", TokenKind::string));
+      REQUIRE (
+        grab_token ("\"this string has a \\\" in\" x")
+          == Token ("\"this string has a \\\" in\"", TokenKind::string));
+      REQUIRE_THROWS (
+        grab_token ("\" this is an unclosed string!")
+      );
     }
   }
 
