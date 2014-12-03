@@ -130,7 +130,7 @@
   <ItemGroup>
     <ClCompile Include="grab_identifier.cpp" />
     <ClCompile Include="grab_string.cpp" />
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="grab_token.cpp" />
   </ItemGroup>
   <ItemGroup>
