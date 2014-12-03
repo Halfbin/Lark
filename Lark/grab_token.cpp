@@ -70,18 +70,14 @@ namespace Lark
 
   Token grab_token (Rk::cstring_ref in)
   {
-    if (in.empty ())
-      return { in, TokenKind::end };
-
-    char ch = in [0];
-
-    if      (is_space    (ch)) return handle_space   (in);
-    else if (is_newline  (ch)) return handle_newline (in);
-    else if (is_comment  (ch)) return handle_comment (in);
-    else if (is_id_start (ch)) return handle_word    (in);
-    else if (is_digit    (ch)) return handle_number  (in);
-    else if (is_quote    (ch)) return handle_string  (in);
-    else                       return { in.slice (0, 1), TokenKind::garbage };
+    if      (in.empty ())          return { in, TokenKind::end };
+    else if (is_space    (in [0])) return handle_space   (in);
+    else if (is_newline  (in [0])) return handle_newline (in);
+    else if (is_comment  (in [0])) return handle_comment (in);
+    else if (is_id_start (in [0])) return handle_word    (in);
+    else if (is_digit    (in [0])) return handle_number  (in);
+    else if (is_quote    (in [0])) return handle_string  (in);
+    else                           return { in.slice (0, 1), TokenKind::garbage };
   }
 
   TEST_CASE ("grab_token")
