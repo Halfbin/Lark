@@ -128,11 +128,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="grab_identifier.cpp" />
+    <ClCompile Include="grab_string.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="GrabToken.cpp" />
+    <ClCompile Include="grab_token.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GrabToken.hpp" />
+    <ClInclude Include="grab_token.hpp" />
     <ClInclude Include="Token.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
