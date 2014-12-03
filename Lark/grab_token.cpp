@@ -68,6 +68,27 @@ namespace Lark
     return { grab_string (in), TokenKind::string };
   }
 
+  bool is_punct (char c)
+  {
+    static const Rk::cstring_ref puncts = "`$^&*()-=+[]{};:@~,./<>-\\|";
+    return std::find (puncts.begin (), puncts.end (), c) != puncts.end ();
+  }
+
+  Token handle_punct (Rk::cstring_ref in)
+  {
+    if (in.size () < 2)
+      return { in, TokenKind::punct };
+
+    std::initializer_list <Rk::cstring_ref> twos = {
+      "++", "--", "==", "::", "<<", ">>", "<=", ">=", "->", "=>"
+    };
+
+    if (std::find (twos.begin (), twos.end (), in.slice (0, 2)) != twos.end ())
+      return { in.slice (0, 2), TokenKind::punct };
+    else
+      return { in.slice (0, 1), TokenKind::punct };
+  }
+
   Token grab_token (Rk::cstring_ref in)
   {
     if      (in.empty ())          return { in, TokenKind::end };
@@ -77,6 +98,7 @@ namespace Lark
     else if (is_id_start (in [0])) return handle_word    (in);
     else if (is_digit    (in [0])) return handle_number  (in);
     else if (is_quote    (in [0])) return handle_string  (in);
+    else if (is_punct    (in [0])) return handle_punct   (in);
     else                           return { in.slice (0, 1), TokenKind::garbage };
   }
 
@@ -106,6 +128,12 @@ namespace Lark
       REQUIRE (grab_token ("12345 x") == Token ("12345", TokenKind::integer));
     }
 
+    SECTION ("recognizes punctuation") {
+      REQUIRE (grab_token ("+> are two separate puncts")
+                 == Token ("+", TokenKind::punct));
+      REQUIRE (grab_token ("++ is a single punct")
+                 == Token ("++", TokenKind::punct));
+    }
   }
 
 }
