@@ -52,10 +52,22 @@ namespace Lark
     return { grab_until (in, is_newline), TokenKind::comment }; 
   }
 
+  bool is_keyword (Rk::cstring_ref in)
+  {
+    std::initializer_list <Rk::cstring_ref> kws = {
+      "and", "or", "not", "if", "else", "func"
+    };
+
+    return std::find (kws.begin (), kws.end (), in) != kws.end ();
+  }
+
   Token handle_word (Rk::cstring_ref in)
   {
     auto spelling = grab_identifier (in);
-    return { spelling, TokenKind::identifier };
+    if (is_keyword (spelling))
+      return { spelling, TokenKind::keyword };
+    else
+      return { spelling, TokenKind::identifier };
   }
 
   Token handle_number (Rk::cstring_ref in)
@@ -133,6 +145,11 @@ namespace Lark
                  == Token ("+", TokenKind::punct));
       REQUIRE (grab_token ("++ is a single punct")
                  == Token ("++", TokenKind::punct));
+    }
+
+    SECTION ("recognizes keywords") {
+      REQUIRE (grab_token ("if keywords end with a space, we're ok")
+                 == Token ("if", TokenKind::keyword));
     }
   }
 
