@@ -25,12 +25,19 @@ namespace Lark
     Rk::cstring_ref spelling;
     TokenKind       kind;
 
-    Token () = default;
+    Token () :
+      kind (TokenKind::end)
+    { }
 
     Token (Rk::cstring_ref spelling, TokenKind kind) :
       spelling (spelling),
       kind     (kind)
     { }
+
+    explicit operator bool () const
+    {
+      return kind != TokenKind::end;
+    }
 
   };
 
