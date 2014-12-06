@@ -136,9 +136,12 @@
     <ClCompile Include="grab_string.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="grab_token.cpp" />
+    <ClCompile Include="parse.cpp" />
+    <ClCompile Include="parse_control.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="grab_token.hpp" />
+    <ClInclude Include="parse_control.hpp" />
     <ClInclude Include="Token.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
