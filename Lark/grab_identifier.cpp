@@ -3,12 +3,8 @@
 
 #include <catch.hpp>
 
-namespace Lark
-{
-  /* [a-zA-Z_][a-zA-Z_0-9]*[!\?]? */
-
-  Rk::cstring_ref grab_identifier (Rk::cstring_ref in)
-  {
+namespace Lark {
+  Rk::cstring_ref grab_identifier (Rk::cstring_ref in) {
     if (in.empty () || !is_id_start (in [0]))
       throw std::logic_error ("oops");
 

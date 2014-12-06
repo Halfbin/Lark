@@ -3,10 +3,8 @@
 
 #include <Rk/string_ref.hpp>
 
-namespace Lark
-{
-  enum class TokenKind
-  {
+namespace Lark {
+  enum class TokenKind {
     garbage,
     end,
     space,
@@ -20,8 +18,7 @@ namespace Lark
     punct
   };
 
-  struct Token
-  {
+  struct Token {
     Rk::cstring_ref spelling;
     TokenKind       kind;
 
@@ -34,21 +31,18 @@ namespace Lark
       kind     (kind)
     { }
 
-    explicit operator bool () const
-    {
+    explicit operator bool () const {
       return kind != TokenKind::end;
     }
 
   };
 
-  inline bool operator == (Token a, Token b)
-  {
+  inline bool operator == (Token a, Token b) {
     return a.kind == b.kind && a.spelling == b.spelling;
   }
 
   template <typename OStream>
-  inline OStream& operator << (OStream& os, Token tok)
-  {
+  inline OStream& operator << (OStream& os, Token tok) {
     return os << tok.spelling;
   }
 

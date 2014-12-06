@@ -137,11 +137,18 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="grab_token.cpp" />
     <ClCompile Include="parse.cpp" />
+    <ClCompile Include="parse_block.cpp" />
     <ClCompile Include="parse_control.cpp" />
+    <ClCompile Include="parse_function.cpp" />
+    <ClCompile Include="parse_stream.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Block.hpp" />
+    <ClInclude Include="Function.hpp" />
     <ClInclude Include="grab_token.hpp" />
+    <ClInclude Include="parse.hpp" />
     <ClInclude Include="parse_control.hpp" />
+    <ClInclude Include="Stream.hpp" />
     <ClInclude Include="Token.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

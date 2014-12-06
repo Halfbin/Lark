@@ -17,6 +17,15 @@
     <ClCompile Include="parse_control.cpp">
       <Filter>Parser</Filter>
     </ClCompile>
+    <ClCompile Include="parse_stream.cpp">
+      <Filter>Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="parse_function.cpp">
+      <Filter>Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="parse_block.cpp">
+      <Filter>Parser</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="grab_token.hpp">
@@ -26,6 +35,18 @@
     <ClInclude Include="parse_control.hpp">
       <Filter>Parser</Filter>
     </ClInclude>
+    <ClInclude Include="parse.hpp">
+      <Filter>Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.hpp">
+      <Filter>AST</Filter>
+    </ClInclude>
+    <ClInclude Include="Function.hpp">
+      <Filter>AST</Filter>
+    </ClInclude>
+    <ClInclude Include="Stream.hpp">
+      <Filter>AST</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Lexer">
@@ -33,6 +54,9 @@
     </Filter>
     <Filter Include="Parser">
       <UniqueIdentifier>{8f018088-e3d3-426a-88cd-d825f758aa41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AST">
+      <UniqueIdentifier>{9036ebf6-1e97-44fc-af7e-0a4763aed4f9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
