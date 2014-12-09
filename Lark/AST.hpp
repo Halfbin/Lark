@@ -17,6 +17,20 @@ namespace Lark {
 
   struct Expression : Statement { };
 
+  struct Infix : Expression {
+    using Operand = Expression*;
+    using Op      = Rk::cstring_ref;
+
+    Operand lhs;
+    Op      op;
+    Operand rhs;
+
+    Infix (Operand lhs, Op op, Operand rhs) :
+      lhs (lhs), op (op), rhs (rhs)
+    { }
+
+  };
+
   struct Return : Statement {
     using Value = Expression*;
     Value value;
