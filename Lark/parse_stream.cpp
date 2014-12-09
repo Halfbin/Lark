@@ -1,51 +1,20 @@
 
-#include "Stream.hpp"
-#include "Function.hpp"
-
-#include <catch.hpp>
+#include "parse.hpp"
 
 namespace Lark {
   // stream = function*
-  Yield parse_stream (Node* node, Cursor cur, Node* child) {
-    auto stream = (Stream*) node;
-    if (!stream) stream = new Stream;
-    if (child) stream->add ((Function*) child);
+  auto parse_stream (Cursor cursor) -> Match <Stream*> {
+    std::vector <Function*> functions;
 
-    while (*cur) {
-      switch (cur->kind) {
-        case TokenKind::space:
-        case TokenKind::newline:
-        case TokenKind::comment:
-          cur++;
-          continue;
-
-        case TokenKind::keyword:
-          if (cur->spelling == "func")
-            return Yield::to (parse_function, cur + 1, parse_stream, stream);
-      }
+    while (*cursor) {
+      auto function = parse_function (cursor);
+      if (!function) throw ParseError ("expected function");
+      functions.push_back (function.result);
+      cursor = function.end.skip_nl ();
     }
 
-    return Yield::returning (cur, stream);
-  }
-
-  using TK = TokenKind;
-
-  TEST_CASE ("parse_stream") {
-    SECTION ("skips trash and recognizes `func`") {
-      const Token tokens [] = {
-        {" ",TK::space}, {"\n",TK::newline}, {"#c",TK::comment},
-        {"func",TK::keyword}, {"TEST",TK::identifier}, {"",TK::end}
-      };
-      auto yield = parse_stream (nullptr, tokens, nullptr);
-      REQUIRE (yield.is_to (parse_function, tokens+4, parse_stream));
-    }
-
-    SECTION ("returns at end-of-file") {
-      const Token end = {"",TK::end};
-      auto yield = parse_stream (nullptr, &end, nullptr);
-      REQUIRE (yield.is_returning (&end));
-    }
-
+    auto stream = new Stream { std::move (functions) };
+    return { cursor, stream };
   }
 
 }

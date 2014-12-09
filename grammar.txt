@@ -1,0 +1,60 @@
+# NEWLINE is completely ignored except in rules that explicitly mention it
+
+stream = top-decl*
+
+top-decl = function*
+
+function = `func` identifier formal-argument-list? block
+
+formal-argument-list = `(` formal-argument-sequence? `)`
+
+formal-argument-sequence = formal-argument (`,` formal-argument)*
+
+formal-argument = identifier
+
+block = `do` statement-sequence `end`
+
+statement-sequence = statement*
+
+statement = block-statement
+          | line-statement statement-terminator
+
+statement-terminator = `;`
+                     | newline
+
+block-statement = block
+                | if
+                | while
+                | loop
+                | for
+
+line-statement = expression
+               | assignment
+               | return
+
+expression = affix-expression (infix-op affix-expression)*
+
+affix-expression = prefix-op* primary-expression postfix-op*
+
+primary-expression = parenthesis | literal | identifier | call
+
+parenthesis = `(` expression `)`
+
+literal = string | number
+
+call = identifier `(` argument-sequence? `)`
+
+argument-sequence = expression (`,` expression)*
+assignment = assignment-target `=` expression
+
+assignment-target = identifier
+
+if = (`if` | `unless`) expression statement (`else` statement)?
+
+while = (`while` | `until`) expression statement
+
+loop = `loop` statement
+
+for = `for` assignment statement
+
+return = `return` expression?

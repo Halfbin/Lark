@@ -20,10 +20,25 @@
     <ClCompile Include="parse_stream.cpp">
       <Filter>Parser</Filter>
     </ClCompile>
+    <ClCompile Include="parse_block.cpp">
+      <Filter>Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="parse_return.cpp">
+      <Filter>Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="parse_assignment.cpp">
+      <Filter>Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="parse_block_statement.cpp">
+      <Filter>Parser</Filter>
+    </ClCompile>
     <ClCompile Include="parse_function.cpp">
       <Filter>Parser</Filter>
     </ClCompile>
-    <ClCompile Include="parse_block.cpp">
+    <ClCompile Include="parse_line_statement.cpp">
+      <Filter>Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="parse_statement.cpp">
       <Filter>Parser</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,14 +53,12 @@
     <ClInclude Include="parse.hpp">
       <Filter>Parser</Filter>
     </ClInclude>
-    <ClInclude Include="Block.hpp">
-      <Filter>AST</Filter>
+    <ClInclude Include="AST.hpp" />
+    <ClInclude Include="Cursor.hpp">
+      <Filter>Parser</Filter>
     </ClInclude>
-    <ClInclude Include="Function.hpp">
-      <Filter>AST</Filter>
-    </ClInclude>
-    <ClInclude Include="Stream.hpp">
-      <Filter>AST</Filter>
+    <ClInclude Include="Match.hpp">
+      <Filter>Parser</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -54,9 +67,6 @@
     </Filter>
     <Filter Include="Parser">
       <UniqueIdentifier>{8f018088-e3d3-426a-88cd-d825f758aa41}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="AST">
-      <UniqueIdentifier>{9036ebf6-1e97-44fc-af7e-0a4763aed4f9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -2,8 +2,13 @@
 #include "parse.hpp"
 
 namespace Lark {
-  Match parse (Cursor tokens) {
-    return parse_recursive (Parser::begin (parse_stream, tokens));
+  ParseError::~ParseError () throw ()
+  { }
+
+  auto parse_identifier (Cursor cursor) -> Match <Rk::cstring_ref> {
+    if (cursor->kind == TokenKind::identifier)
+      return { cursor.next (), cursor->spelling };
+    else return cursor;
   }
 
 }
