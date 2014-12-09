@@ -139,32 +139,24 @@
     <ClCompile Include="parse.cpp" />
     <ClCompile Include="parse_assignment.cpp" />
     <ClCompile Include="parse_block.cpp" />
-    <ClCompile Include="parse_block_statement.cpp" />
-    <ClCompile Include="parse_control.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="parse_expression.cpp" />
+    <ClCompile Include="parse_for.cpp" />
     <ClCompile Include="parse_function.cpp" />
-    <ClCompile Include="parse_line_statement.cpp" />
+    <ClCompile Include="parse_if.cpp" />
+    <ClCompile Include="parse_loop.cpp" />
     <ClCompile Include="parse_return.cpp" />
     <ClCompile Include="parse_statement.cpp" />
     <ClCompile Include="parse_stream.cpp" />
+    <ClCompile Include="parse_while.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AST.hpp" />
-    <ClInclude Include="Cursor.hpp" />
+    <ClInclude Include="ast.hpp" />
+    <ClInclude Include="cursor.hpp" />
+    <ClInclude Include="expect.hpp" />
     <ClInclude Include="grab_token.hpp" />
-    <ClInclude Include="Match.hpp" />
+    <ClInclude Include="match.hpp" />
     <ClInclude Include="parse.hpp" />
-    <ClInclude Include="parse_control.hpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="Token.hpp" />
+    <ClInclude Include="token.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

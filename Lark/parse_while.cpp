@@ -28,7 +28,7 @@ namespace Lark {
     if (!key) return cursor;
 
     auto condition = parse_condition (key.end.skip_nl ());
-    auto body = parse_body (condition.end.skip_nol ());
+    auto body = parse_body (condition.end.skip_nl ());
 
     auto node = new While { condition.result, body.result };
     return { body.end, node };

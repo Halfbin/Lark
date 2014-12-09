@@ -3,8 +3,12 @@
 
 namespace Lark {
   namespace {
+    bool is_key (Token token) {
+      return token.spelling == "return";
+    }
+
     auto parse_key (Cursor cursor) -> Match <bool> {
-      return expect (cursor, "return");
+      return expect (cursor, is_key);
     }
 
     auto parse_value (Cursor cursor) -> Match <Expression*> {

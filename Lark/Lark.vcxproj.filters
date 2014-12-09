@@ -14,9 +14,6 @@
     <ClCompile Include="parse.cpp">
       <Filter>Parser</Filter>
     </ClCompile>
-    <ClCompile Include="parse_control.cpp">
-      <Filter>Parser</Filter>
-    </ClCompile>
     <ClCompile Include="parse_stream.cpp">
       <Filter>Parser</Filter>
     </ClCompile>
@@ -29,16 +26,25 @@
     <ClCompile Include="parse_assignment.cpp">
       <Filter>Parser</Filter>
     </ClCompile>
-    <ClCompile Include="parse_block_statement.cpp">
-      <Filter>Parser</Filter>
-    </ClCompile>
     <ClCompile Include="parse_function.cpp">
       <Filter>Parser</Filter>
     </ClCompile>
-    <ClCompile Include="parse_line_statement.cpp">
+    <ClCompile Include="parse_statement.cpp">
       <Filter>Parser</Filter>
     </ClCompile>
-    <ClCompile Include="parse_statement.cpp">
+    <ClCompile Include="parse_if.cpp">
+      <Filter>Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="parse_while.cpp">
+      <Filter>Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="parse_loop.cpp">
+      <Filter>Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="parse_for.cpp">
+      <Filter>Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="parse_expression.cpp">
       <Filter>Parser</Filter>
     </ClCompile>
   </ItemGroup>
@@ -46,20 +52,20 @@
     <ClInclude Include="grab_token.hpp">
       <Filter>Lexer</Filter>
     </ClInclude>
-    <ClInclude Include="Token.hpp" />
-    <ClInclude Include="parse_control.hpp">
-      <Filter>Parser</Filter>
-    </ClInclude>
     <ClInclude Include="parse.hpp">
       <Filter>Parser</Filter>
     </ClInclude>
-    <ClInclude Include="AST.hpp" />
-    <ClInclude Include="Cursor.hpp">
+    <ClInclude Include="expect.hpp">
       <Filter>Parser</Filter>
     </ClInclude>
-    <ClInclude Include="Match.hpp">
+    <ClInclude Include="cursor.hpp">
       <Filter>Parser</Filter>
     </ClInclude>
+    <ClInclude Include="match.hpp">
+      <Filter>Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="ast.hpp" />
+    <ClInclude Include="token.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Lexer">

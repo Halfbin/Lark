@@ -3,18 +3,22 @@
 
 namespace Lark {
   namespace {
+    bool is_key (Token token) {
+      return token.spelling == "func";
+    }
+
     auto parse_key (Cursor cursor) -> Match <bool> {
-      return expect (cursor, "func");
+      return expect (cursor, is_key);
     }
 
     auto parse_name (Cursor cursor) -> Match <Function::Name> {
-      auto name = parse_identifier (cursor);
+      auto name = expect (cursor, is_identifier);
       if (!name) throw ParseError ("expected function name");
       else return name;
     }
 
     auto parse_argument (Cursor cursor) -> Match <Function::Argument> {
-      return parse_identifier (cursor);
+      return expect (cursor, is_identifier);
     }
 
     auto parse_argument_sequence (Cursor cursor) -> Match <Function::Arguments> {
@@ -36,12 +40,12 @@ namespace Lark {
     }
 
     auto parse_arguments (Cursor cursor) -> Match <Function::Arguments> {
-      auto open = expect (cursor, "(");
+      auto open = expect (cursor, is_spelled ("("));
       if (!open) return cursor;
 
       auto arguments = parse_argument_sequence (open.end.skip_nl ());
 
-      auto close = expect (arguments.end.skip_nl (), ")");
+      auto close = expect (arguments.end.skip_nl (), is_spelled (")"));
       if (!close) throw ParseError ("expected `)`");
 
       return { close.end.skip_nl (), std::move (arguments.result) };

@@ -1,11 +1,13 @@
 
 #pragma once
 
+#include <type_traits>
 #include <stdexcept>
 
-#include "Cursor.hpp"
-#include "Match.hpp"
-#include "AST.hpp"
+#include "cursor.hpp"
+#include "expect.hpp"
+#include "match.hpp"
+#include "ast.hpp"
 
 namespace Lark {
   struct ParseError : public std::runtime_error {
@@ -13,42 +15,20 @@ namespace Lark {
     virtual ~ParseError () throw ();
   };
 
-  static auto expect (Cursor cursor, Rk::cstring_ref spelling)
-    -> Match <Rk::cstring_ref>
-  {
-    if (cursor->spelling != spelling) return cursor;
-    else return { cursor.next (), cursor->spelling };
-  }
-
-  static auto expect (Cursor cursor, TokenKind kind)
-    -> Match <Rk::cstring_ref>
-  {
-    if (cursor->kind != kind) return cursor;
-    else return { cursor.next (), cursor->spelling };
-  }
-
-  static auto expect (Cursor cursor, TokenKind kind, Rk::cstring_ref spelling)
-    -> Match <Rk::cstring_ref>
-  {
-    if (cursor->kind != kind || cursor->spelling != spelling) return cursor;
-    else return { cursor.next (), cursor->spelling };
-  }
-
-  template <typename Parser>
-  auto parse_first_of (Cursor cursor, Parser parser)
-  {
+  template <typename Result, typename Parser>
+  auto parse_first_of (Cursor cursor, Parser parser) -> Match <Result> {
     return parser (cursor);
   }
 
-  template <typename Parser, typename... Parsers>
+  template <typename Result, typename Parser, typename... Parsers>
   auto parse_first_of (Cursor cursor, Parser parser, Parsers... rest)
+    -> Match <Result>
   {
-    auto match = parser (cursor);
-    if (!match) return parse_first_of (cursor, rest...);
+    Match <Result> match = parser (cursor);
+    if (!match) return parse_first_of <Result> (cursor, rest...);
     else return match;
   }
 
-  auto parse_identifier (Cursor) -> Match <Rk::cstring_ref>;
   auto parse_expression (Cursor) -> Match <Expression*>;
   auto parse_assignment (Cursor) -> Match <Assignment*>;
   auto parse_return     (Cursor) -> Match <Return*>;

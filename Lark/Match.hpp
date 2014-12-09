@@ -1,11 +1,13 @@
 
 #pragma once
 
-#include "Cursor.hpp"
+#include "cursor.hpp"
 
 namespace Lark {
   template <typename Result>
   struct Match {
+    using ResultType = Result;
+
     Cursor end;
     Result result;
 
@@ -16,11 +18,11 @@ namespace Lark {
     template <typename OtherResult>
     Match (const Match <OtherResult>& other) :
       end (other.end),
-      result (std::static_cast <Result> (other.result))
+      result (static_cast <Result> (other.result))
     { }
 
     explicit operator bool () const {
-      return result;
+      return !!result;
     }
 
   };

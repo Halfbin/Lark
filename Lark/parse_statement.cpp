@@ -16,7 +16,7 @@ namespace Lark {
   }
 
   auto parse_line_statement (Cursor cursor) -> Match <Statement*> {
-    auto statement = parse_first_of (cursor,
+    auto statement = parse_first_of <Statement*> (cursor,
       parse_return,
       parse_assignment,
       parse_expression);
@@ -27,7 +27,7 @@ namespace Lark {
   }
 
   auto parse_block_statement (Cursor cursor) -> Match <Statement*> {
-    return parse_first_of (cursor,
+    return parse_first_of <Statement*> (cursor,
       parse_block,
       parse_if,
       parse_while,
@@ -36,7 +36,7 @@ namespace Lark {
   }
 
   auto parse_statement (Cursor cursor) -> Match <Statement*> {
-    return parse_first_of (cursor,
+    return parse_first_of <Statement*> (cursor,
       parse_block_statement,
       parse_line_statement);
   }

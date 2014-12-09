@@ -20,7 +20,9 @@ namespace Lark {
     }
 
     auto parse_body (Cursor cursor) -> Match <If::Body> {
-      return parse_statement (cursor);
+      auto body = parse_block (cursor);
+      if (!body) throw ParseError ("expected block");
+      else return body;
     }
 
   }

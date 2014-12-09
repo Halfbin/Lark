@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "Token.hpp"
+#include "token.hpp"
 
 namespace Lark {
   class Cursor {

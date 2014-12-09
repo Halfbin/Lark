@@ -36,25 +36,32 @@ expression = affix-expression (infix-op affix-expression)*
 
 affix-expression = prefix-op* primary-expression postfix-op*
 
-primary-expression = parenthesis | literal | identifier | call
+primary-expression = parenthesis
+                   | literal
+                   | identifier
+                   | call
 
 parenthesis = `(` expression `)`
 
-literal = string | number
+literal = string
+        | number
 
 call = identifier `(` argument-sequence? `)`
 
 argument-sequence = expression (`,` expression)*
+
 assignment = assignment-target `=` expression
 
 assignment-target = identifier
 
-if = (`if` | `unless`) expression statement (`else` statement)?
+if = (`if` | `unless`) expression block else?
 
-while = (`while` | `until`) expression statement
+else = `else` block
 
-loop = `loop` statement
+while = (`while` | `until`) expression block
 
-for = `for` assignment statement
+loop = `loop` block
+
+for = `for` assignment block
 
 return = `return` expression?

@@ -22,7 +22,7 @@ namespace Lark {
     auto key = parse_key (cursor);
     if (!key) return cursor;
 
-    auto body = parse_body (condition.end.skip_nol ());
+    auto body = parse_body (key.end.skip_nl ());
 
     auto node = new Loop { body.result };
     return { body.end, node };

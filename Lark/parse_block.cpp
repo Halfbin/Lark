@@ -16,12 +16,12 @@ namespace Lark {
 
   // block = `do` statement-sequence? `end`
   auto parse_block (Cursor cursor) -> Match <Block*> {
-    auto open = expect (cursor, "do");
+    auto open = expect (cursor, is_spelled ("do"));
     if (!open) return cursor;
 
     auto statements = parse_statement_sequence (open.end.skip_nl ());
 
-    auto close = expect (statements.end.skip_nl (), "end");
+    auto close = expect (statements.end.skip_nl (), is_spelled ("end"));
     if (!close) throw ParseError ("expected `end`");
 
     auto block = new Block { std::move (statements.result) };

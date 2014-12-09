@@ -2,35 +2,38 @@
 #include "parse.hpp"
 
 namespace Lark {
-  auto parse_assignment_target (Cursor cursor) -> Match <Assignment::Target> {
-    return parse_identifier (cursor);
+  namespace {
+    auto parse_lhs (Cursor cursor) -> Match <Assignment::LHS> {
+      return expect (cursor, is_identifier);
+    }
+
+    bool is_op (Token token) {
+      return token.spelling == "=";
+    }
+
+    auto parse_op (Cursor cursor) -> Match <Assignment::Op> {
+      return expect (cursor, is_op);
+    }
+
+    auto parse_rhs (Cursor cursor) -> Match <Assignment::RHS> {
+      auto rhs = parse_expression (cursor);
+      if (!rhs)
+        throw ParseError ("expected expression on right-side of assignment");
+      return rhs;
+    }
+
   }
 
-  bool is_assignment_op (Token token) {
-    return token.spelling == "=";
-  }
+  auto parse_assignment (Cursor cursor) -> Match <Assignment*> {
+    auto lhs = parse_lhs (cursor);
+    if (!lhs) return cursor;
 
-  auto parse_assignment_op (Cursor cursor) -> Match <Assignment::Op> {
-    if (!is_assignment_op (*cursor)) return cursor;
-    else return { cursor.next (), cursor->spelling };
-  }
-
-  auto parse_assignment_rhs (Cursor cursor) -> Match <Assignment::RHS> {
-    return parse_expression (cursor);
-  }
-
-  auto parse_assign (Cursor cursor) -> Match <Assignment*> {
-    auto target = parse_assignment_target (cursor);
-    if (!target) return cursor;
-
-    auto op = parse_assignment_op (target.end.skip_nl ());
+    auto op = parse_op (lhs.end.skip_nl ());
     if (!op) return cursor;
 
-    auto rhs = parse_assignment_rhs (op.end.skip_nl ());
-    if (!rhs)
-      throw ParseError ("expected expression on right-side of assignment");
+    auto rhs = parse_rhs (op.end.skip_nl ());
 
-    auto assignment = new Assignment (target.result, op.result, rhs.result);
+    auto assignment = new Assignment (lhs.result, op.result, rhs.result);
     return { rhs.end, assignment };
   }
 

@@ -10,6 +10,11 @@ namespace Lark {
 
   using Statements = std::vector <Statement*>;
 
+  struct Block : Statement {
+    Statements statements;
+    Block (Statements statements) : statements (statements) { }
+  };
+
   struct Expression : Statement { };
 
   struct Return : Statement {
@@ -19,16 +24,16 @@ namespace Lark {
   };
 
   struct Assignment : Statement {
-    using Target = Rk::cstring_ref;
-    using Op     = Rk::cstring_ref;
-    using RHS    = Expression*;
+    using LHS = Rk::cstring_ref;
+    using Op  = Rk::cstring_ref;
+    using RHS = Expression*;
 
-    Target target;
-    Op     op;
-    RHS    rhs;
+    LHS lhs;
+    Op  op;
+    RHS rhs;
 
-    Assignment (Target target, Op op, RHS rhs) :
-      target (target), op (op), rhs (rhs)
+    Assignment (LHS lhs, Op op, RHS rhs) :
+      lhs (lhs), op (op), rhs (rhs)
     { }
 
   };
@@ -53,7 +58,7 @@ namespace Lark {
     Condition condition;
     Body      body;
 
-    If (Condition condition, Body body) :
+    While (Condition condition, Body body) :
       condition (condition), body (body)
     { }
 
@@ -66,16 +71,14 @@ namespace Lark {
   };
 
   struct For : Statement {
-    using Assignment = Assignment*;
-    using Body       = Block*;
+    using Spec = Assignment*;
+    using Body = Block*;
     
-    Assignment assignment;
-    
-  };
+    Spec spec;
+    Body body;
 
-  struct Block : Statement {
-    Statements statements;
-    Block (Statements statements) : statements (statements) { }
+    For (Spec spec, Body body) : spec (spec), body (body) { }
+
   };
 
   struct Function {
