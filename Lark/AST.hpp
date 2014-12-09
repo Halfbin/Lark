@@ -46,11 +46,32 @@ namespace Lark {
 
   };
 
-  struct While : Statement { };
+  struct While : Statement {
+    using Condition = Expression*;
+    using Body      = Block*;
 
-  struct Loop : Statement { };
+    Condition condition;
+    Body      body;
 
-  struct For : Statement { };
+    If (Condition condition, Body body) :
+      condition (condition), body (body)
+    { }
+
+  };
+
+  struct Loop : Statement {
+    using Body = Block*;
+    Body body;
+    Loop (Body body) : body (body) { }
+  };
+
+  struct For : Statement {
+    using Assignment = Assignment*;
+    using Body       = Block*;
+    
+    Assignment assignment;
+    
+  };
 
   struct Block : Statement {
     Statements statements;

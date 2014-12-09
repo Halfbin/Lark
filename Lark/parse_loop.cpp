@@ -4,8 +4,7 @@
 namespace Lark {
   namespace {
     bool is_key (Token token) {
-      return token.spelling == "while"
-          || token.spelling == "until";
+      return token.spelling == "loop";
     }
 
     auto parse_key (Cursor cursor) -> Match <Rk::cstring_ref> {
@@ -13,24 +12,19 @@ namespace Lark {
       else return { cursor.next (), cursor->spelling };
     }
 
-    auto parse_condition (Cursor cursor) -> Match <While::Condition> {
-      return parse_expression (cursor);
-    }
-
-    auto parse_body (Cursor cursor) -> Match <While::Body> {
+    auto parse_body (Cursor cursor) -> Match <Loop::Body> {
       return parse_statement (cursor);
     }
 
   }
 
-  auto parse_while (Cursor cursor) -> Match <While*> {
+  auto parse_loop (Cursor cursor) -> Match <Loop*> {
     auto key = parse_key (cursor);
     if (!key) return cursor;
 
-    auto condition = parse_condition (key.end.skip_nl ());
     auto body = parse_body (condition.end.skip_nol ());
 
-    auto node = new While { condition.result, body.result };
+    auto node = new Loop { body.result };
     return { body.end, node };
   }
 
