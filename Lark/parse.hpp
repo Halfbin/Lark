@@ -66,9 +66,9 @@ namespace Lark {
   };
 
   struct FunctionParser : Parser <Function> {
-    Parser <FormalArgList>& fargs_parser;
-    Parser <Block>&         block_parser;
-    FunctionParser (Parser <FormalArgList>& fargs, Parser <Block>& block) :
+    Parser <FuncArgList>& fargs_parser;
+    Parser <Block>&       block_parser;
+    FunctionParser (Parser <FuncArgList>& fargs, Parser <Block>& block) :
       fargs_parser (fargs), block_parser (block)
     { }
     auto parse (Cursor) const -> Match <Function>;

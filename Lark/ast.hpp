@@ -24,17 +24,17 @@ namespace Lark {
 
   using Decl = std::unique_ptr <DeclBase>;
 
-  using FormalArg = StrRef;
+  using FuncArg = StrRef;
 
-  using FormalArgList = std::vector <FormalArg>;
+  using FuncArgList = std::vector <FuncArg>;
 
   struct FunctionNode : DeclBase {
-    FormalArgList formal_args;
-    Block         body;
+    FuncArgList func_args;
+    Block       body;
 
-    FunctionNode (FormalArgList fargs, Block body) :
+    FunctionNode (FuncArgList fargs, Block body) :
       DeclBase (DeclType::function),
-      formal_args (std::move (fargs)),
+      func_args (std::move (fargs)),
       body (std::move (body))
     { }
 

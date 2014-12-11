@@ -25,8 +25,8 @@ namespace Lark {
   using namespace TokenHelpers;
 
   TEST_CASE ("FunctionParser") {
-    StubParser <FormalArgList> fargs_stub (
-      "<fargs>", [] () -> FormalArgList { return { "x", "y", "z" }; }
+    StubParser <FuncArgList> fargs_stub (
+      "<fargs>", [] () -> FuncArgList { return { "x", "y", "z" }; }
     );
     StubParser <Block> block_stub (
       "<block>", [] () -> Block { return std::make_unique <BlockNode> (); }
@@ -40,7 +40,7 @@ namespace Lark {
       auto m = p.parse (tokens);
       REQUIRE (m);
       REQUIRE (m.result->ty == DeclType::function);
-      REQUIRE (m.result->formal_args.size () == 3);
+      REQUIRE (m.result->func_args.size () == 3);
       REQUIRE (m.result->body);
       REQUIRE (m.end->kind == TK::end);
     }
@@ -66,7 +66,7 @@ namespace Lark {
       auto m = p.parse (tokens);
       REQUIRE (m);
       REQUIRE (m.result->ty == DeclType::function);
-      REQUIRE (m.result->formal_args.empty ());
+      REQUIRE (m.result->func_args.empty ());
       REQUIRE (m.result->body);
       REQUIRE (m.end->kind == TK::end);
     }
