@@ -3,17 +3,14 @@
 
 #include <catch.hpp>
 
-namespace Lark
-{
-  Rk::cstring_ref grab_string (Rk::cstring_ref in)
-  {
+namespace Lark {
+  Rk::cstring_ref grab_string (Rk::cstring_ref in) {
     if (in.empty () || !is_quote (in [0]))
       throw std::logic_error ("oops");
 
     auto quot = in.begin ();
 
-    do
-    {
+    do {
       // Find the next quote
       quot = std::find_if (quot + 1, in.end (), is_quote);
 
@@ -25,8 +22,7 @@ namespace Lark
     return { in.begin (), quot + 1 };
   }
 
-  TEST_CASE ("grab_string")
-  {
+  TEST_CASE ("grab_string") {
     REQUIRE (
       grab_string ("\"\" is an empty string")
                 == "\"\"");

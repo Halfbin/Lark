@@ -5,55 +5,45 @@
 
 #include <algorithm>
 
-namespace Lark
-{
+namespace Lark {
   template <typename Range, typename Pred>
-  Range grab_while (const Range& in, Pred pred)
-  {
+  Range grab_while (const Range& in, Pred pred) {
     return { in.begin (), std::find_if_not (in.begin (), in.end (), pred) };
   }
 
   template <typename Range, typename Pred>
-  Range grab_until (const Range& in, Pred pred)
-  {
+  Range grab_until (const Range& in, Pred pred) {
     return { in.begin (), std::find_if (in.begin (), in.end (), pred) };
   }
 
-  bool is_space (char c)
-  {
+  bool is_space (char c) {
     return c == ' ';
   }
 
-  bool is_comment (char c)
-  {
+  bool is_comment (char c) {
     return c == '#';
   }
 
-  bool is_newline (char c)
-  {
+  bool is_newline (char c) {
     return (c == '\r') || (c == '\n');
   }
 
-  Token handle_space (Rk::cstring_ref in)
-  {
+  Token handle_space (Rk::cstring_ref in) {
     return { grab_while (in, is_space), TokenKind::space }; 
   }
 
-  Token handle_newline (Rk::cstring_ref in)
-  {
+  Token handle_newline (Rk::cstring_ref in) {
     if (in.size () >= 2 && in.slice (0, 2) == "\r\n")
       return { in.slice (0, 2), TokenKind::newline };
     else
       return { in.slice (0, 1), TokenKind::newline };
   }
 
-  Token handle_comment (Rk::cstring_ref in)
-  {
+  Token handle_comment (Rk::cstring_ref in) {
     return { grab_until (in, is_newline), TokenKind::comment }; 
   }
 
-  bool is_keyword (Rk::cstring_ref in)
-  {
+  bool is_keyword (Rk::cstring_ref in) {
     std::initializer_list <Rk::cstring_ref> kws = {
       "and", "or", "not", "if", "else", "func"
     };
@@ -61,8 +51,7 @@ namespace Lark
     return std::find (kws.begin (), kws.end (), in) != kws.end ();
   }
 
-  Token handle_word (Rk::cstring_ref in)
-  {
+  Token handle_word (Rk::cstring_ref in) {
     auto spelling = grab_identifier (in);
     if (is_keyword (spelling))
       return { spelling, TokenKind::keyword };
@@ -70,24 +59,20 @@ namespace Lark
       return { spelling, TokenKind::identifier };
   }
 
-  Token handle_number (Rk::cstring_ref in)
-  {
+  Token handle_number (Rk::cstring_ref in) {
     return { grab_while (in, is_digit), TokenKind::integer };
   }
 
-  Token handle_string (Rk::cstring_ref in)
-  {
+  Token handle_string (Rk::cstring_ref in) {
     return { grab_string (in), TokenKind::string };
   }
 
-  bool is_punct (char c)
-  {
+  bool is_punct (char c) {
     static const Rk::cstring_ref puncts = "`$^&*()-=+[]{};:@~,./<>-\\|";
     return std::find (puncts.begin (), puncts.end (), c) != puncts.end ();
   }
 
-  Token handle_punct (Rk::cstring_ref in)
-  {
+  Token handle_punct (Rk::cstring_ref in) {
     if (in.size () < 2)
       return { in, TokenKind::punct };
 
@@ -101,8 +86,7 @@ namespace Lark
       return { in.slice (0, 1), TokenKind::punct };
   }
 
-  Token grab_token (Rk::cstring_ref in)
-  {
+  Token grab_token (Rk::cstring_ref in) {
     if      (in.empty ())          return { in, TokenKind::end };
     else if (is_space    (in [0])) return handle_space   (in);
     else if (is_newline  (in [0])) return handle_newline (in);
@@ -114,8 +98,7 @@ namespace Lark
     else                           return { in.slice (0, 1), TokenKind::garbage };
   }
 
-  TEST_CASE ("grab_token")
-  {
+  TEST_CASE ("grab_token") {
     SECTION ("recognizes whitespace") {
       REQUIRE (grab_token ("   x") == Token ("   ", TokenKind::space));
     }

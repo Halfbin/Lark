@@ -138,8 +138,9 @@
     <ClCompile Include="grab_token.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ast.h" />
     <ClInclude Include="grab_token.hpp" />
-    <ClInclude Include="Token.hpp" />
+    <ClInclude Include="token.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

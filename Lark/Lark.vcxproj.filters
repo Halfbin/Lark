@@ -16,7 +16,8 @@
     <ClInclude Include="grab_token.hpp">
       <Filter>Lexer</Filter>
     </ClInclude>
-    <ClInclude Include="Token.hpp" />
+    <ClInclude Include="ast.h" />
+    <ClInclude Include="token.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Lexer">
