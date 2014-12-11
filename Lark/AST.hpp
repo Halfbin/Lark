@@ -31,6 +31,47 @@ namespace Lark {
 
   };
 
+  struct Affix : Expression {
+    using Operand = Expression*;
+    using Op      = Rk::cstring_ref;
+    using Ops     = std::vector <Op>;
+
+    Ops     pre;
+    Operand operand;
+    Ops     post;
+
+    Affix (Ops pre, Operand operand, Ops post) :
+      pre (pre), operand (operand), post (post)
+    { }
+
+  };
+
+  struct Literal : Expression {
+    using Value = Rk::cstring_ref;
+    Value value;
+    Literal (Value value) : value (value) { }
+  };
+
+  struct Reference : Expression {
+    using Name = Rk::cstring_ref;
+    Name name;
+    Reference (Name name) : name (name) { }
+  };
+
+  struct Call : Expression {
+    using Target = Rk::cstring_ref;
+    using Argument = Expression*;
+    using Arguments = std::vector <Argument>;
+
+    Target    target;
+    Arguments arguments;
+
+    Call (Target target, Arguments arguments) :
+      target (target), arguments (arguments)
+    { }
+
+  };
+
   struct Return : Statement {
     using Value = Expression*;
     Value value;

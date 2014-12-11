@@ -4,7 +4,7 @@
 namespace Lark {
   namespace {
     auto parse_lhs (Cursor cursor) -> Match <Assignment::LHS> {
-      return expect (cursor, is_identifier);
+      return expect (is_identifier, cursor);
     }
 
     bool is_op (Token token) {
@@ -12,7 +12,7 @@ namespace Lark {
     }
 
     auto parse_op (Cursor cursor) -> Match <Assignment::Op> {
-      return expect (cursor, is_op);
+      return expect (is_op, cursor);
     }
 
     auto parse_rhs (Cursor cursor) -> Match <Assignment::RHS> {
@@ -28,10 +28,10 @@ namespace Lark {
     auto lhs = parse_lhs (cursor);
     if (!lhs) return cursor;
 
-    auto op = parse_op (lhs.end.skip_nl ());
+    auto op = parse_op (lhs.end);
     if (!op) return cursor;
 
-    auto rhs = parse_rhs (op.end.skip_nl ());
+    auto rhs = parse_rhs (op.end);
 
     auto assignment = new Assignment (lhs.result, op.result, rhs.result);
     return { rhs.end, assignment };

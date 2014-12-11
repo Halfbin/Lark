@@ -137,13 +137,16 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="grab_token.cpp" />
     <ClCompile Include="parse.cpp" />
+    <ClCompile Include="parse_affix.cpp" />
     <ClCompile Include="parse_assignment.cpp" />
     <ClCompile Include="parse_block.cpp" />
-    <ClCompile Include="parse_expression.cpp" />
+    <ClCompile Include="parse_call.cpp" />
     <ClCompile Include="parse_for.cpp" />
     <ClCompile Include="parse_function.cpp" />
     <ClCompile Include="parse_if.cpp" />
+    <ClCompile Include="parse_infix.cpp" />
     <ClCompile Include="parse_loop.cpp" />
+    <ClCompile Include="parse_primary.cpp" />
     <ClCompile Include="parse_return.cpp" />
     <ClCompile Include="parse_statement.cpp" />
     <ClCompile Include="parse_stream.cpp" />

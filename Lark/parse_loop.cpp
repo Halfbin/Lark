@@ -13,7 +13,7 @@ namespace Lark {
     }
 
     auto parse_body (Cursor cursor) -> Match <Loop::Body> {
-      return parse_statement (cursor);
+      return parse_block (cursor);
     }
 
   }
@@ -22,7 +22,7 @@ namespace Lark {
     auto key = parse_key (cursor);
     if (!key) return cursor;
 
-    auto body = parse_body (key.end.skip_nl ());
+    auto body = parse_body (key.end);
 
     auto node = new Loop { body.result };
     return { body.end, node };

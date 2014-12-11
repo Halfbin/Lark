@@ -10,7 +10,7 @@ namespace Lark {
       auto function = parse_function (cursor);
       if (!function) throw ParseError ("expected function");
       functions.push_back (function.result);
-      cursor = function.end.skip_nl ();
+      cursor = function.end;
     }
 
     auto stream = new Stream { std::move (functions) };

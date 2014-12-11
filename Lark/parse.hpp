@@ -29,6 +29,10 @@ namespace Lark {
     else return match;
   }
 
+  auto parse_call       (Cursor) -> Match <Call*>;
+  auto parse_primary    (Cursor) -> Match <Expression*>;
+  auto parse_infix      (Cursor) -> Match <Infix*>;
+  auto parse_affix      (Cursor) -> Match <Affix*>;
   auto parse_expression (Cursor) -> Match <Expression*>;
   auto parse_assignment (Cursor) -> Match <Assignment*>;
   auto parse_return     (Cursor) -> Match <Return*>;

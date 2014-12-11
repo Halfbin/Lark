@@ -8,7 +8,7 @@ namespace Lark {
     }
 
     auto parse_key (Cursor cursor) -> Match <Rk::cstring_ref> {
-      return expect (cursor, is_key);
+      return expect (is_key, cursor);
     }
 
     auto parse_spec (Cursor cursor) -> Match <For::Spec> {
@@ -16,7 +16,7 @@ namespace Lark {
     }
 
     auto parse_body (Cursor cursor) -> Match <For::Body> {
-      return parse_statement (cursor);
+      return parse_block (cursor);
     }
 
   }
@@ -25,8 +25,8 @@ namespace Lark {
     auto key = parse_key (cursor);
     if (!key) return cursor;
 
-    auto spec = parse_spec (key.end.skip_nl ());
-    auto body = parse_body (spec.end.skip_nl ());
+    auto spec = parse_spec (key.end);
+    auto body = parse_body (spec.end);
 
     auto node = new For { spec.result, body.result };
     return { body.end, node };

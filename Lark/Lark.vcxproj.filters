@@ -44,7 +44,16 @@
     <ClCompile Include="parse_for.cpp">
       <Filter>Parser</Filter>
     </ClCompile>
-    <ClCompile Include="parse_expression.cpp">
+    <ClCompile Include="parse_infix.cpp">
+      <Filter>Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="parse_affix.cpp">
+      <Filter>Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="parse_call.cpp">
+      <Filter>Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="parse_primary.cpp">
       <Filter>Parser</Filter>
     </ClCompile>
   </ItemGroup>

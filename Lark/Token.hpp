@@ -50,4 +50,14 @@ namespace Lark {
     return os << tok.spelling;
   }
 
+  inline bool is_literal (Token token) {
+    return token.kind == TokenKind::integer
+        || token.kind == TokenKind::real
+        || token.kind == TokenKind::string;
+  }
+
+  inline bool is_identifier (Token token) {
+    return token.kind == TokenKind::identifier;
+  }
+
 }

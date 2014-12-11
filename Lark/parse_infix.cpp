@@ -18,10 +18,6 @@ namespace Lark {
       return Precedence (int (prec) + rhs);
     }
 
-    auto parse_primary (Cursor cursor) -> Match <Primary*> {
-
-    };
-
     bool is_relation (Rk::cstring_ref op) {
       return op == "<"
           || op == "<="
@@ -51,15 +47,16 @@ namespace Lark {
     }
 
     bool is_infix_op (Token token) {
-      return is_relation    (token.spelling)
-          || is_disjunction (token.spelling)
-          || is_conjunction (token.spelling)
-          || is_sum         (token.spelling)
-          || is_product     (token.spelling);
+      auto sp = token.spelling;
+      return is_relation    (sp)
+          || is_disjunction (sp)
+          || is_conjunction (sp)
+          || is_sum         (sp)
+          || is_product     (sp);
     }
 
     auto parse_infix_op (Cursor cursor) -> Match <Rk::cstring_ref> {
-      return expect (cursor, is_infix_op);
+      return expect (is_infix_op, cursor);
     }
 
     Precedence infix_precedence (Rk::cstring_ref op) {
@@ -71,29 +68,29 @@ namespace Lark {
       else throw std::logic_error ("not an infix operator");
     }
 
-    auto parse_infix (const Cursor cursor, Precedence min_precedence)
-      -> Match <Infix*>
-    {
-      auto expression = parse_primary (cursor);
-      if (!expression) return cursor;
+  }
 
-      for (;;) {
-        auto op = parse_infix_op (expression.end);
-        if (!op) break;
+  auto parse_infix (const Cursor cursor, Precedence min_precedence)
+    -> Match <Infix*>
+  {
+    Match <Expression*> expression = parse_affix (cursor);
+    if (!expression) return cursor;
 
-        auto precedence = infix_precedence (op.result);
-        if (precedence < min_precedence) break; // associate at higher level
+    for (;;) {
+      auto op = parse_infix_op (expression.end);
+      if (!op) break;
 
-        auto rhs = parse_infix (op.end, precedence + 1);
-        if (!rhs) return cursor;
+      auto precedence = infix_precedence (op.result);
+      if (precedence < min_precedence) break; // associate at higher level
 
-        auto node = new Infix { expression.result, op.result, rhs.result };
-        expression = { rhs.end, node };
-      }
+      auto rhs = parse_infix (op.end, precedence + 1);
+      if (!rhs) throw ParseError ("expected expression right-side");
 
-      return expression;
+      auto node = new Infix { expression.result, op.result, rhs.result };
+      expression = { rhs.end, node };
     }
 
+    return expression;
   }
 
   auto parse_expression (Cursor cursor) -> Match <Expression*> {

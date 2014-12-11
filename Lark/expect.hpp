@@ -4,22 +4,30 @@
 #include "match.hpp"
 
 namespace Lark {
-  template <typename Pred>
-  static auto expect (Cursor cursor, Pred pred)
+  template <typename Cond>
+  static auto expect (Cond pred, Cursor cursor)
     -> Match <Rk::cstring_ref>
   {
     if (!pred (*cursor)) return cursor;
     else return { cursor.next (), cursor->spelling };
   }
 
-  static auto is_kind (TokenKind kind) {
-    return [kind] (Token t) { return t.kind == kind; };
+  static auto expect (Cursor cursor, Rk::cstring_ref spelling)
+    -> Match <Rk::cstring_ref>
+  {
+    return expect (
+      [spelling] (Token t) { return t.spelling == spelling; },
+      cursor
+    );
   }
 
-  static auto is_identifier = is_kind (TokenKind::identifier);
-
-  static auto is_spelled (Rk::cstring_ref spelling) {
-    return [spelling] (Token t) { return t.spelling == spelling; };
+  static auto expect (Cursor cursor, TokenKind kind)
+    -> Match <Rk::cstring_ref>
+  {
+    return expect (
+      [kind] (Token t) { return t.kind == kind; },
+      cursor
+    );
   }
 
 }

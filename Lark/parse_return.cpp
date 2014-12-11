@@ -8,7 +8,7 @@ namespace Lark {
     }
 
     auto parse_key (Cursor cursor) -> Match <bool> {
-      return expect (cursor, is_key);
+      return expect (is_key, cursor);
     }
 
     auto parse_value (Cursor cursor) -> Match <Expression*> {
