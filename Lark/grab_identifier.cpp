@@ -4,7 +4,7 @@
 #include <catch.hpp>
 
 namespace Lark {
-  Rk::cstring_ref grab_identifier (Rk::cstring_ref in) {
+  StrRef grab_identifier (StrRef in) {
     if (in.empty () || !is_id_start (in [0]))
       throw std::logic_error ("oops");
 

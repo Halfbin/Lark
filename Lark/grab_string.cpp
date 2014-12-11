@@ -4,7 +4,7 @@
 #include <catch.hpp>
 
 namespace Lark {
-  Rk::cstring_ref grab_string (Rk::cstring_ref in) {
+  StrRef grab_string (StrRef in) {
     if (in.empty () || !is_quote (in [0]))
       throw std::logic_error ("oops");
 

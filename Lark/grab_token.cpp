@@ -28,30 +28,30 @@ namespace Lark {
     return (c == '\r') || (c == '\n');
   }
 
-  Token handle_space (Rk::cstring_ref in) {
+  Token handle_space (StrRef in) {
     return { grab_while (in, is_space), TokenKind::space }; 
   }
 
-  Token handle_newline (Rk::cstring_ref in) {
+  Token handle_newline (StrRef in) {
     if (in.size () >= 2 && in.slice (0, 2) == "\r\n")
       return { in.slice (0, 2), TokenKind::newline };
     else
       return { in.slice (0, 1), TokenKind::newline };
   }
 
-  Token handle_comment (Rk::cstring_ref in) {
+  Token handle_comment (StrRef in) {
     return { grab_until (in, is_newline), TokenKind::comment }; 
   }
 
-  bool is_keyword (Rk::cstring_ref in) {
-    std::initializer_list <Rk::cstring_ref> kws = {
+  bool is_keyword (StrRef in) {
+    std::initializer_list <StrRef> kws = {
       "and", "or", "not", "if", "else", "func"
     };
 
     return std::find (kws.begin (), kws.end (), in) != kws.end ();
   }
 
-  Token handle_word (Rk::cstring_ref in) {
+  Token handle_word (StrRef in) {
     auto spelling = grab_identifier (in);
     if (is_keyword (spelling))
       return { spelling, TokenKind::keyword };
@@ -59,24 +59,24 @@ namespace Lark {
       return { spelling, TokenKind::identifier };
   }
 
-  Token handle_number (Rk::cstring_ref in) {
+  Token handle_number (StrRef in) {
     return { grab_while (in, is_digit), TokenKind::integer };
   }
 
-  Token handle_string (Rk::cstring_ref in) {
+  Token handle_string (StrRef in) {
     return { grab_string (in), TokenKind::string };
   }
 
   bool is_punct (char c) {
-    static const Rk::cstring_ref puncts = "`$^&*()-=+[]{};:@~,./<>-\\|";
+    static const StrRef puncts = "`$^&*()-=+[]{};:@~,./<>-\\|";
     return std::find (puncts.begin (), puncts.end (), c) != puncts.end ();
   }
 
-  Token handle_punct (Rk::cstring_ref in) {
+  Token handle_punct (StrRef in) {
     if (in.size () < 2)
       return { in, TokenKind::punct };
 
-    std::initializer_list <Rk::cstring_ref> twos = {
+    std::initializer_list <StrRef> twos = {
       "++", "--", "==", "::", "<<", ">>", "<=", ">=", "->", "=>"
     };
 
@@ -86,7 +86,7 @@ namespace Lark {
       return { in.slice (0, 1), TokenKind::punct };
   }
 
-  Token grab_token (Rk::cstring_ref in) {
+  Token grab_token (StrRef in) {
     if      (in.empty ())          return { in, TokenKind::end };
     else if (is_space    (in [0])) return handle_space   (in);
     else if (is_newline  (in [0])) return handle_newline (in);

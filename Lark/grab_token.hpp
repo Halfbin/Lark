@@ -27,9 +27,9 @@ namespace Lark {
     return (c == '!') || (c == '?');
   }
 
-  Rk::cstring_ref grab_string     (Rk::cstring_ref);
-  Rk::cstring_ref grab_identifier (Rk::cstring_ref);
+  StrRef grab_string     (StrRef);
+  StrRef grab_identifier (StrRef);
 
-  Token grab_token (Rk::cstring_ref);
+  Token grab_token (StrRef);
 
 }

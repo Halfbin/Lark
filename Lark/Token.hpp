@@ -18,15 +18,17 @@ namespace Lark {
     punct
   };
 
+  using StrRef = Rk::cstring_ref;
+
   struct Token {
-    Rk::cstring_ref spelling;
+    StrRef spelling;
     TokenKind       kind;
 
     Token () :
       kind (TokenKind::end)
     { }
 
-    Token (Rk::cstring_ref spelling, TokenKind kind) :
+    Token (StrRef spelling, TokenKind kind) :
       spelling (spelling),
       kind     (kind)
     { }
