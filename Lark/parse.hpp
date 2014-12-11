@@ -36,18 +36,33 @@ namespace Lark {
 
   template <typename Result>
   struct StubParser : Parser <Result> {
-    StrRef spelling;
-    StubParser (StrRef spelling) : spelling (spelling) { }
+    using Factory = Result (*) ();
+
+    StrRef  spelling;
+    Factory factory;
+
+    StubParser (StrRef spelling, Factory factory) :
+      spelling (spelling),
+      factory  (factory)
+    { }
+
     auto parse (Cursor cursor) const -> Match <Result> {
       if (cursor->spelling != spelling) return cursor;
-      else return Match <Result> { cursor.next (), Result () };
+      else return Match <Result> { cursor.next (), factory () };
     }
+
   };
 
   struct StreamParser : Parser <Stream> {
     Parser <Decl>& decl_parser;
     StreamParser (Parser <Decl>& decl) : decl_parser (decl) { }
     auto parse (Cursor) const -> Match <Stream>;
+  };
+
+  struct DeclParser : Parser <Decl> {
+    Parser <Function>& func_parser;
+    DeclParser (Parser <Function>& func) : func_parser (func) { }
+    auto parse (Cursor) const -> Match <Decl>;
   };
 
 }

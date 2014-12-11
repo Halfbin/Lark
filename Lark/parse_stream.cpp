@@ -14,12 +14,13 @@ namespace Lark {
   using namespace TokenHelpers;
 
   TEST_CASE ("StreamParser") {
-    StubParser <Decl> dp ("<decl>");
+    StubParser <Decl> dp ("<decl>", [] () -> Decl { return nullptr; });
     StreamParser p { dp };
 
-    SECTION ("parses decls") {
+    SECTION ("parses streams of decls") {
       Token tokens[] = { id("<decl>"), id("<decl>"), id("<decl>"), t_end };
       auto s = p.parse (tokens);
+      REQUIRE (s);
       REQUIRE (s.result.size () == 3);
       REQUIRE (s.end->kind == TK::end);
     }
@@ -27,6 +28,8 @@ namespace Lark {
     SECTION ("accepts empty streams") {
       Token tokens[] = { t_end };
       auto s = p.parse (tokens);
+      REQUIRE (s);
+      REQUIRE (s.result.empty ());
       REQUIRE (s.end->kind == TK::end);
     }
 

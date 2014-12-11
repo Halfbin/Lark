@@ -136,6 +136,7 @@
     <ClCompile Include="grab_string.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="grab_token.cpp" />
+    <ClCompile Include="parse_decl.cpp" />
     <ClCompile Include="parse_error.cpp" />
     <ClCompile Include="parse_stream.cpp" />
   </ItemGroup>
