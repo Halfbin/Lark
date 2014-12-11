@@ -1,6 +1,8 @@
 
 #pragma once
 
+#include "types.hpp"
+
 #include <memory>
 #include <vector>
 

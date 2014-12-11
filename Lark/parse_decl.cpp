@@ -11,21 +11,23 @@ namespace Lark {
   using namespace TokenHelpers;
 
   TEST_CASE ("DeclParser") {
-    StubParser <Function> fp ("<func>", [] { return std::make_unique <FunctionNode> (); });
-    DeclParser p { fp };
+    StubParser <Function> function_stub (
+      "<func>", [] { return std::make_unique <FunctionNode> (); }
+    );
+    DeclParser p { function_stub };
 
     SECTION ("parses functions") {
       Token tokens[] = { id("<func>"), t_end };
-      auto s = p.parse (tokens);
-      REQUIRE (s);
-      REQUIRE (s.result->ty == DeclType::function);
-      REQUIRE (s.end->kind == TK::end);
+      auto m = p.parse (tokens);
+      REQUIRE (m);
+      REQUIRE (m.result->ty == DeclType::function);
+      REQUIRE (m.end->kind == TK::end);
     }
 
     SECTION ("rejects non-functions") {
       Token tokens[] = { id("<non-func>"), t_end };
-      auto s = p.parse (tokens);
-      REQUIRE (!s);
+      auto m = p.parse (tokens);
+      REQUIRE (!m);
     }
 
   }

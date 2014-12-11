@@ -39,6 +39,7 @@
       <Filter>Parser</Filter>
     </ClInclude>
     <ClInclude Include="ast.hpp" />
+    <ClInclude Include="types.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Lexer">

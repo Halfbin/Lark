@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include <Rk/string_ref.hpp>
+#include "types.hpp"
 
 namespace Lark {
   enum class TokenKind {
@@ -17,8 +17,6 @@ namespace Lark {
     string,
     punct
   };
-
-  using StrRef = Rk::cstring_ref;
 
   struct Token {
     StrRef    spelling;
