@@ -21,8 +21,8 @@ namespace Lark {
   using StrRef = Rk::cstring_ref;
 
   struct Token {
-    StrRef spelling;
-    TokenKind       kind;
+    StrRef    spelling;
+    TokenKind kind;
 
     Token () :
       kind (TokenKind::end)
@@ -46,6 +46,17 @@ namespace Lark {
   template <typename OStream>
   inline OStream& operator << (OStream& os, Token tok) {
     return os << tok.spelling;
+  }
+
+  namespace TokenHelpers {
+    inline Token id (StrRef spelling) {
+      return { spelling, TokenKind::identifier };
+    }
+
+    static const Token t_end { "<end>", TokenKind::end };
+
+    using TK = TokenKind;
+
   }
 
 }

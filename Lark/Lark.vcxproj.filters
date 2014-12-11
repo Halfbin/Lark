@@ -11,17 +11,38 @@
       <Filter>Lexer</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="parse_error.cpp">
+      <Filter>Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="parse_stream.cpp">
+      <Filter>Parser</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="grab_token.hpp">
       <Filter>Lexer</Filter>
     </ClInclude>
-    <ClInclude Include="ast.h" />
     <ClInclude Include="token.hpp" />
+    <ClInclude Include="parse.hpp">
+      <Filter>Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="cursor.hpp">
+      <Filter>Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="match.hpp">
+      <Filter>Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="expect.hpp">
+      <Filter>Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="ast.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Lexer">
       <UniqueIdentifier>{329ab77c-5e81-4213-83cd-dbaa5020081e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Parser">
+      <UniqueIdentifier>{36e2c336-a3f4-43b8-8c50-d6a24e2cc1e4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

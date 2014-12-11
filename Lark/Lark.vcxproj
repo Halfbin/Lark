@@ -136,10 +136,16 @@
     <ClCompile Include="grab_string.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="grab_token.cpp" />
+    <ClCompile Include="parse_error.cpp" />
+    <ClCompile Include="parse_stream.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ast.h" />
+    <ClInclude Include="ast.hpp" />
+    <ClInclude Include="cursor.hpp" />
+    <ClInclude Include="expect.hpp" />
     <ClInclude Include="grab_token.hpp" />
+    <ClInclude Include="match.hpp" />
+    <ClInclude Include="parse.hpp" />
     <ClInclude Include="token.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
