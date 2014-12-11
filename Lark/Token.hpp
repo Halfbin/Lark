@@ -51,6 +51,10 @@ namespace Lark {
       return { spelling, TokenKind::identifier };
     }
 
+    inline Token kw (StrRef spelling) {
+      return { spelling, TokenKind::keyword };
+    }
+
     static const Token t_end { "<end>", TokenKind::end };
 
     using TK = TokenKind;

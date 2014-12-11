@@ -20,6 +20,9 @@
     <ClCompile Include="parse_decl.cpp">
       <Filter>Parser</Filter>
     </ClCompile>
+    <ClCompile Include="parse_function.cpp">
+      <Filter>Parser</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="grab_token.hpp">
