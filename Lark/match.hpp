@@ -18,12 +18,14 @@ namespace Lark {
       end (end), matched (false)
     { }
 
-    template <typename Other>
+    /*template <typename Other>
     Match (const Match <Other>& other) :
       end     (other.end),
       result  (static_cast <Result> (other.result)),
       matched (other.matched)
-    { }
+    { }*/
+
+    Match (const Match&) = delete;
 
     template <typename Other>
     Match (Match <Other>&& other) :
@@ -31,6 +33,16 @@ namespace Lark {
       result  (std::move (other.result)),
       matched (other.matched)
     { }
+
+    template <typename Other>
+    Match& operator = (Match <Other>&& other) {
+      end = other.end;
+      result = std::move (other.result);
+      matched = other.matched;
+      return *this;
+    }
+
+    Match& operator = (const Match&) = delete;
 
     explicit operator bool () const {
       return matched;

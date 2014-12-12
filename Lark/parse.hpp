@@ -74,6 +74,12 @@ namespace Lark {
     auto parse (Cursor) const -> Match <Function>;
   };
 
+  struct BlockParser : Parser <Block> {
+    Parser <StmtSeq>& stmtseq_parser;
+    BlockParser (Parser <StmtSeq>& stmtseq) : stmtseq_parser (stmtseq) { }
+    auto parse (Cursor) const -> Match <Block>;
+  };
+
   template <typename Elem>
   struct SequenceParser : Parser <std::vector <Elem>> {
     StrRef         separator;

@@ -7,7 +7,38 @@
 #include <vector>
 
 namespace Lark {
-  struct BlockNode {
+  enum class StmtType {
+    block
+  };
+
+  struct StmtBase {
+    const StmtType ty;
+    StmtBase (StmtType ty) : ty (ty) { }
+  };
+
+  using Stmt = std::unique_ptr <StmtBase>;
+  using StmtSeq = std::vector <Stmt>;
+
+  struct BlockNode : StmtBase {
+    StmtSeq stmts;
+
+    explicit BlockNode (StmtSeq stmts) :
+      StmtBase (StmtType::block),
+      stmts    (std::move (stmts))
+    { }
+
+    BlockNode (BlockNode&& other) :
+      StmtBase (StmtType::block),
+      stmts    (std::move (other.stmts))
+    { }
+
+    BlockNode () :
+      StmtBase (StmtType::block)
+    { }
+
+    BlockNode (const BlockNode&) = delete;
+
+    BlockNode& operator = (const BlockNode&) = delete;
 
   };
 
