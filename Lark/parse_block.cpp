@@ -5,16 +5,12 @@
 
 namespace Lark {
   auto BlockParser::parse (Cursor cursor) const -> Match <Block> {
-    auto open = expect (cursor, "do");
-    if (!open) return cursor;
+    BracketParser <StmtSeq> bracket ("do", "end", stmtseq_parser);
+    auto match = bracket.parse (cursor);
+    if (!match) return cursor;
 
-    auto stmtseq = stmtseq_parser.parse (open.end);
-
-    auto close = expect (stmtseq.end, "end");
-    if (!close) throw ParseError ("expected `end` at end of block");
-
-    Block block = std::make_unique <BlockNode> (std::move (stmtseq.result));
-    return { close.end, std::move (block) };
+    Block block = std::make_unique <BlockNode> (std::move (match.result));
+    return { match.end, std::move (block) };
   }
 
   using namespace TokenHelpers;

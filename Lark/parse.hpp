@@ -110,4 +110,30 @@ namespace Lark {
 
   };
 
+  template <typename Inner>
+  struct BracketParser : Parser <Inner> {
+    StrRef          open_delim, close_delim;
+    Parser <Inner>& inner_parser;
+
+    BracketParser (StrRef open, StrRef close, Parser <Inner>& inner) :
+      open_delim   (open),
+      close_delim  (close),
+      inner_parser (inner)
+    { }
+
+    auto parse (Cursor cursor) const -> Match <Inner> {
+      auto open = expect (cursor, open_delim);
+      if (!open) return cursor;
+
+      auto inner = inner_parser.parse (open.end);
+
+      auto close = expect (inner.end, close_delim);
+      if (!close)
+        throw ParseError ("expected closing delimiter at end of bracket");
+
+      return { close.end, std::move (inner.result) };
+    }
+
+  };
+
 }
