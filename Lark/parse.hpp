@@ -74,4 +74,34 @@ namespace Lark {
     auto parse (Cursor) const -> Match <Function>;
   };
 
+  template <typename Elem>
+  struct SequenceParser : Parser <std::vector <Elem>> {
+    StrRef         separator;
+    Parser <Elem>& elem_parser;
+
+    SequenceParser (StrRef separator, Parser <Elem>& elem) :
+      separator   (separator),
+      elem_parser (elem)
+    { }
+
+    auto parse (Cursor cursor) const -> Match <std::vector <Elem>> {
+      auto elem = elem_parser.parse (cursor);
+      if (!elem) return cursor;
+
+      std::vector <Elem> seq { std::move (elem.result) };
+
+      for (;;) {
+        auto sep = expect (elem.end, separator);
+        if (!sep) break;
+
+        elem = elem_parser.parse (sep.end);
+        if (!elem) throw ParseError ("expected element after separator");
+        else seq.push_back (std::move (elem.result));
+      }
+
+      return { elem.end, std::move (seq) };
+    }
+
+  };
+
 }
