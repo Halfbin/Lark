@@ -34,52 +34,6 @@ namespace Lark {
     return { cursor, std::move (results) };
   }
 
-  template <typename Result>
-  struct StubParser : Parser <Result> {
-    using Factory = Result (*) ();
-
-    StrRef  spelling;
-    Factory factory;
-
-    StubParser (StrRef spelling, Factory factory) :
-      spelling (spelling),
-      factory  (factory)
-    { }
-
-    auto parse (Cursor cursor) const -> Match <Result> {
-      if (cursor->spelling != spelling) return cursor;
-      else return Match <Result> { cursor.next (), factory () };
-    }
-
-  };
-
-  struct StreamParser : Parser <Stream> {
-    Parser <Decl>& decl_parser;
-    StreamParser (Parser <Decl>& decl) : decl_parser (decl) { }
-    auto parse (Cursor) const -> Match <Stream>;
-  };
-
-  struct DeclParser : Parser <Decl> {
-    Parser <Function>& func_parser;
-    DeclParser (Parser <Function>& func) : func_parser (func) { }
-    auto parse (Cursor) const -> Match <Decl>;
-  };
-
-  struct FunctionParser : Parser <Function> {
-    Parser <FuncArgList>& fargs_parser;
-    Parser <Block>&       block_parser;
-    FunctionParser (Parser <FuncArgList>& fargs, Parser <Block>& block) :
-      fargs_parser (fargs), block_parser (block)
-    { }
-    auto parse (Cursor) const -> Match <Function>;
-  };
-
-  struct BlockParser : Parser <Block> {
-    Parser <StmtSeq>& stmtseq_parser;
-    BlockParser (Parser <StmtSeq>& stmtseq) : stmtseq_parser (stmtseq) { }
-    auto parse (Cursor) const -> Match <Block>;
-  };
-
   template <typename Elem>
   struct SequenceParser : Parser <std::vector <Elem>> {
     StrRef         separator;
@@ -134,6 +88,52 @@ namespace Lark {
       return { close.end, std::move (inner.result) };
     }
 
+  };
+
+  template <typename Result>
+  struct StubParser : Parser <Result> {
+    using Factory = Result (*) ();
+
+    StrRef  spelling;
+    Factory factory;
+
+    StubParser (StrRef spelling, Factory factory) :
+      spelling (spelling),
+      factory  (factory)
+    { }
+
+    auto parse (Cursor cursor) const -> Match <Result> {
+      if (cursor->spelling != spelling) return cursor;
+      else return Match <Result> { cursor.next (), factory () };
+    }
+
+  };
+
+  struct StreamParser : Parser <Stream> {
+    Parser <Decl>& decl_parser;
+    StreamParser (Parser <Decl>& decl) : decl_parser (decl) { }
+    auto parse (Cursor) const -> Match <Stream>;
+  };
+
+  struct DeclParser : Parser <Decl> {
+    Parser <Function>& func_parser;
+    DeclParser (Parser <Function>& func) : func_parser (func) { }
+    auto parse (Cursor) const -> Match <Decl>;
+  };
+
+  struct FunctionParser : Parser <Function> {
+    Parser <FuncArgList>& fargs_parser;
+    Parser <Block>&       block_parser;
+    FunctionParser (Parser <FuncArgList>& fargs, Parser <Block>& block) :
+      fargs_parser (fargs), block_parser (block)
+    { }
+    auto parse (Cursor) const -> Match <Function>;
+  };
+
+  struct BlockParser : Parser <Block> {
+    Parser <StmtSeq>& stmtseq_parser;
+    BlockParser (Parser <StmtSeq>& stmtseq) : stmtseq_parser (stmtseq) { }
+    auto parse (Cursor) const -> Match <Block>;
   };
 
 }
