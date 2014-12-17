@@ -136,4 +136,13 @@ namespace Lark {
     auto parse (Cursor) const -> Match <Block>;
   };
 
+  struct StmtParser : Parser <Stmt> {
+    Parser <Stmt>& linestmt_parser;
+    Parser <Stmt>& blockstmt_parser;
+    StmtParser (Parser <Stmt>& linestmt, Parser <Stmt>& blockstmt) :
+      linestmt_parser (linestmt), blockstmt_parser (blockstmt)
+    { }
+    auto parse (Cursor) const -> Match <Stmt>;
+  };
+
 }

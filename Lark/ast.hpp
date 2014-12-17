@@ -8,6 +8,7 @@
 
 namespace Lark {
   enum class StmtType {
+    test,
     block
   };
 

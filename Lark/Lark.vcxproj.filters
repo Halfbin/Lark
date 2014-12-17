@@ -29,6 +29,9 @@
     <ClCompile Include="parse_block.cpp">
       <Filter>Parser</Filter>
     </ClCompile>
+    <ClCompile Include="parse_stmt.cpp">
+      <Filter>Parser</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="grab_token.hpp">
