@@ -55,6 +55,13 @@ namespace Lark {
       auto m = p.parse (tokens);
       REQUIRE (!m);
     }
+
+    SECTION ("parses empty statements") {
+      Token tokens [] = { pn(";"), t_end };
+      auto m = p.parse (tokens);
+      REQUIRE (m);
+      REQUIRE (m.end->kind == TK::end);
+    }
   }
 
 }
