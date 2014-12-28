@@ -136,6 +136,26 @@ namespace Lark {
     auto parse (Cursor) const -> Match <Block>;
   };
 
+  class IfClauseParser : public Parser <IfClause> {
+  public:
+    Parser <Expr>&  expr_parser;
+    Parser <Block>& block_parser;
+    IfClauseParser (Parser <Expr>& expr, Parser <Block>& block) :
+      expr_parser (expr), block_parser (block)
+    { }
+    auto parse (Cursor) const -> Match <IfClause>;
+  };
+
+  class IfParser : public Parser <If> {
+  public:
+    Parser <IfClause>& clause_parser;
+    Parser <Block>&    block_parser;
+    IfParser (Parser <IfClause>& clause, Parser <Block>& block) :
+      clause_parser (clause), block_parser (block)
+    { }
+    auto parse (Cursor) const -> Match <If>;
+  };
+
   struct StmtParser : Parser <Stmt> {
     Parser <Stmt>& linestmt_parser;
     Parser <Stmt>& blockstmt_parser;

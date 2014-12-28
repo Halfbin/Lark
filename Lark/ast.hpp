@@ -9,7 +9,9 @@
 namespace Lark {
   enum class StmtType {
     test,
-    block
+    expr,
+    block,
+    if_else
   };
 
   struct StmtBase {
@@ -19,6 +21,15 @@ namespace Lark {
 
   using Stmt = std::unique_ptr <StmtBase>;
   using StmtSeq = std::vector <Stmt>;
+
+  struct ExprBase : StmtBase {
+    ExprBase () :
+      StmtBase (StmtType::expr)
+    { }
+
+  };
+
+  using Expr = std::unique_ptr <ExprBase>;
 
   struct BlockNode : StmtBase {
     StmtSeq stmts;
@@ -44,6 +55,37 @@ namespace Lark {
   };
 
   using Block = std::unique_ptr <BlockNode>;
+
+  struct IfClause {
+    Expr cond;
+    Stmt body;
+  };
+
+  struct IfNode : StmtBase {
+    std::vector <IfClause> clauses;
+    Stmt                   else_stmt;
+
+    explicit IfNode (std::vector <IfClause> clauses, Stmt else_stmt) :
+      StmtBase  (StmtType::if_else),
+      clauses   (std::move (clauses)),
+      else_stmt (std::move (else_stmt))
+    { }
+
+    IfNode (IfNode&& other) :
+      StmtBase  (StmtType::if_else),
+      clauses   (std::move (other.clauses)),
+      else_stmt (std::move (other.else_stmt))
+    { }
+
+    IfNode () :
+      StmtBase (StmtType::if_else)
+    { }
+
+    IfNode (const IfNode&) = delete;
+    IfNode& operator = (const IfNode&) = delete;
+  };
+
+  using If = std::unique_ptr <IfNode>;
 
   enum class DeclType {
     function

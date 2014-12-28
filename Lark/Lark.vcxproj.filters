@@ -32,6 +32,12 @@
     <ClCompile Include="parse_stmt.cpp">
       <Filter>Parser</Filter>
     </ClCompile>
+    <ClCompile Include="parse_if.cpp">
+      <Filter>Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="parse_if_clause.cpp">
+      <Filter>Parser</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="grab_token.hpp">

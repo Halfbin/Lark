@@ -140,6 +140,8 @@
     <ClCompile Include="parse_decl.cpp" />
     <ClCompile Include="parse_error.cpp" />
     <ClCompile Include="parse_function.cpp" />
+    <ClCompile Include="parse_if.cpp" />
+    <ClCompile Include="parse_if_clause.cpp" />
     <ClCompile Include="parse_sequence.cpp" />
     <ClCompile Include="parse_stmt.cpp" />
     <ClCompile Include="parse_stream.cpp" />
