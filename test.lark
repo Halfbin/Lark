@@ -1,0 +1,11 @@
+# test file
+
+func test (a b c) do
+  if 1 do
+    f ();
+  else if 2 do
+    g (b);
+  else do
+    h (c, 9);
+  end
+end

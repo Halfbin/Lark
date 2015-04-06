@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Lark", "Lark\Lark.vcxproj", "{9F3559B4-C1FF-4661-B6F5-62931DDBD6AF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Rk-Core", "Rk-Core\Rk-Core\Rk-Core.vcxproj", "{881F5AA2-AA84-4D54-8128-E3689EC72A89}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Rk-RawIO", "Rk-RawIO\Rk-RawIO\Rk-RawIO.vcxproj", "{97A780F9-C32B-470B-AEAE-46CD644D3F5D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,14 @@ Global
 		{881F5AA2-AA84-4D54-8128-E3689EC72A89}.Release|Win32.Build.0 = Release|Win32
 		{881F5AA2-AA84-4D54-8128-E3689EC72A89}.Release|x64.ActiveCfg = Release|x64
 		{881F5AA2-AA84-4D54-8128-E3689EC72A89}.Release|x64.Build.0 = Release|x64
+		{97A780F9-C32B-470B-AEAE-46CD644D3F5D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{97A780F9-C32B-470B-AEAE-46CD644D3F5D}.Debug|Win32.Build.0 = Debug|Win32
+		{97A780F9-C32B-470B-AEAE-46CD644D3F5D}.Debug|x64.ActiveCfg = Debug|x64
+		{97A780F9-C32B-470B-AEAE-46CD644D3F5D}.Debug|x64.Build.0 = Debug|x64
+		{97A780F9-C32B-470B-AEAE-46CD644D3F5D}.Release|Win32.ActiveCfg = Release|Win32
+		{97A780F9-C32B-470B-AEAE-46CD644D3F5D}.Release|Win32.Build.0 = Release|Win32
+		{97A780F9-C32B-470B-AEAE-46CD644D3F5D}.Release|x64.ActiveCfg = Release|x64
+		{97A780F9-C32B-470B-AEAE-46CD644D3F5D}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

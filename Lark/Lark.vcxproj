@@ -130,27 +130,30 @@
     <ProjectReference Include="..\Rk-Core\Rk-Core\Rk-Core.vcxproj">
       <Project>{881f5aa2-aa84-4d54-8128-e3689ec72a89}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\Rk-RawIO\Rk-RawIO\Rk-RawIO.vcxproj">
+      <Project>{97a780f9-c32b-470b-aeae-46cd644d3f5d}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="grab_identifier.cpp" />
     <ClCompile Include="grab_string.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="grab_token.cpp" />
+    <ClCompile Include="parse_expr.cpp" />
+    <ClCompile Include="parse_stream.cpp" />
     <ClCompile Include="parse_block.cpp" />
     <ClCompile Include="parse_decl.cpp" />
     <ClCompile Include="parse_error.cpp" />
     <ClCompile Include="parse_function.cpp" />
     <ClCompile Include="parse_if.cpp" />
-    <ClCompile Include="parse_if_clause.cpp" />
-    <ClCompile Include="parse_sequence.cpp" />
     <ClCompile Include="parse_stmt.cpp" />
-    <ClCompile Include="parse_stream.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ast.hpp" />
     <ClInclude Include="cursor.hpp" />
     <ClInclude Include="expect.hpp" />
     <ClInclude Include="grab_token.hpp" />
+    <ClInclude Include="lex.hpp" />
     <ClInclude Include="match.hpp" />
     <ClInclude Include="parse.hpp" />
     <ClInclude Include="token.hpp" />

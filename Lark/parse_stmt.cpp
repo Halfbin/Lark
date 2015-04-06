@@ -4,64 +4,28 @@
 #include <catch.hpp>
 
 namespace Lark {
-  auto StmtParser::parse (Cursor cursor) const -> Match <Stmt> {
-    auto block = blockstmt_parser.parse (cursor);
+  auto parse_block_stmt (Cursor cursor) -> Match <Stmt> {
+    Match <Stmt> match = parse_if (cursor); if (match) return match;
+
+    return cursor;
+  }
+
+  auto parse_line_stmt (Cursor cursor) -> Match <Stmt> {
+    return parse_expr (cursor);
+  }
+
+  auto parse_stmt (Cursor cursor) -> Match <Stmt> {
+    auto block = parse_block_stmt (cursor);
     if (block) return block;
 
-    auto line = linestmt_parser.parse (cursor);
+    auto line = parse_line_stmt (cursor);
     auto term = expect (line.end, ";");
     if (line && !term) throw ParseError ("expected `;`");
     else if (!term) return cursor;
     else return { term.end, std::move (line.result) };
   }
 
-  using namespace TokenHelpers;
-
-  TEST_CASE ("StmtParser") {
-    auto make_stmt = [] () -> Stmt {
-      return std::make_unique <StmtBase> (StmtType::test);
-    };
-
-    StubParser <Stmt> blockstmt_stub ("<block-stmt>", make_stmt);
-    StubParser <Stmt> linestmt_stub  ("<line-stmt>",  make_stmt);
-
-    StmtParser p (linestmt_stub, blockstmt_stub);
-
-    SECTION ("parses block statements") {
-      Token tokens [] = { id("<block-stmt>"), t_end };
-      auto m = p.parse (tokens);
-      REQUIRE (m);
-      REQUIRE (m.end->kind == TK::end);
-      REQUIRE (m.result);
-      REQUIRE (m.result->ty == StmtType::test);
-    }
-
-    SECTION ("parses line statements") {
-      Token tokens [] = { id("<line-stmt>"), pn(";"), t_end };
-      auto m = p.parse (tokens);
-      REQUIRE (m);
-      REQUIRE (m.end->kind == TK::end);
-      REQUIRE (m.result);
-      REQUIRE (m.result->ty == StmtType::test);
-    }
-
-    SECTION ("fails for unterminated line statements") {
-      Token tokens [] = { id("<line-stmt>"), id("not_a_semicolon"), t_end };
-      REQUIRE_THROWS (p.parse (tokens));
-    }
-
-    SECTION ("rejects non-statements") {
-      Token tokens [] = { id("<non-stmt>"), t_end };
-      auto m = p.parse (tokens);
-      REQUIRE (!m);
-    }
-
-    SECTION ("parses empty statements") {
-      Token tokens [] = { pn(";"), t_end };
-      auto m = p.parse (tokens);
-      REQUIRE (m);
-      REQUIRE (m.end->kind == TK::end);
-    }
+  auto parse_stmt_seq (Cursor cursor) -> Match <StmtSeq> {
+    return parse_star (cursor, parse_stmt);
   }
-
 }

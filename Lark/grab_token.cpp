@@ -45,7 +45,7 @@ namespace Lark {
 
   bool is_keyword (StrRef in) {
     std::initializer_list <StrRef> kws = {
-      "and", "or", "not", "if", "else", "func"
+      "and", "or", "not", "if", "else", "func", "do", "end"
     };
 
     return std::find (kws.begin (), kws.end (), in) != kws.end ();
